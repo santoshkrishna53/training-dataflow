@@ -14,7 +14,7 @@ import json
 # credential_path = "cred.json"
 # os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
 
-project_id = "springmltraining-316807"
+project_id = "training-316807"
 topic_id = "pub-sub-training"
 
 class dataingestion:
