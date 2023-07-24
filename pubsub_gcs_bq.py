@@ -11,7 +11,7 @@ import json
 
 credential_path = "cred.json"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
-INPUT_SUBSCRIPTION = "projects/springmltraining-316807/subscriptions/subscriber-dataflow"
+INPUT_SUBSCRIPTION = "projects/training-316807/subscriptions/subscriber-dataflow"
 
 class CustomParsing(beam.DoFn):
     def to_runner_api_parameter(self, unused_context):
@@ -54,11 +54,11 @@ def run():
     pipeline_options.view_as(StandardOptions).streaming = True
 
     with beam.Pipeline(options=pipeline_options) as p:
-        (p | "ReadFromPubSub" >> beam.io.gcp.pubsub.ReadFromPubSub(subscription="projects/springmltraining-316807/subscriptions/subscriber-dataflow", timestamp_attribute=None)
+        (p | "ReadFromPubSub" >> beam.io.gcp.pubsub.ReadFromPubSub(subscription="projects/training-316807/subscriptions/subscriber-dataflow", timestamp_attribute=None)
         |'parsing the message' >> beam.ParDo(CustomParsing())
         |'Reading data from gcs object' >> beam.io.ReadAllFromText()
         |'String To BigQuery Row' >> beam.Map(lambda s: data_ingestion.process(s))
-        | 'WriteToBigQuery' >> beam.io.WriteToBigQuery('springmltraining-316807:pub_sub_dataset.pubsubbq',write_disposition=beam.io.BigQueryDisposition.WRITE_APPEND)
+        | 'WriteToBigQuery' >> beam.io.WriteToBigQuery('training-316807:pub_sub_dataset.pubsubbq',write_disposition=beam.io.BigQueryDisposition.WRITE_APPEND)
         )
     
 if __name__ == "__main__":
