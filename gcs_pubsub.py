@@ -24,7 +24,7 @@ class dataingestion:
     return message
   
 def pub(data):
-  project_id="springmltraining-316807"
+  project_id="training-316807"
   topic_id = "pub-sub-training-new"
   client = pubsub_v1.PublisherClient()
   topic_path = client.topic_path(project_id, topic_id)
@@ -39,7 +39,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     known_args = parser.parse_known_args(argv)
     # p = beam.Pipeline(options=PipelineOptions())
-    p = beam.Pipeline(argv=["--project springmltraining-316807", "--temp_location gs://dataflow-pub-sub-training2/temp","--staging_location gs://dataflow-pub-sub-training2/staging/"])
+    p = beam.Pipeline(argv=["--project training-316807", "--temp_location gs://dataflow-pub-sub-training2/temp","--staging_location gs://dataflow-pub-sub-training2/staging/"])
     (p | 'ReadData' >> beam.io.ReadFromText('gs://dataflow-pub-sub-training2/data.csv', skip_header_lines =1)
     |'Strimng to byteStriing' >> beam.Map(lambda s: data_ingestion.parse_method(s))
     |'publishing to pubsub' >> beam.Map(lambda s: pub(s))
