@@ -7,7 +7,7 @@ from sys import argv
 import re
 import argparse
 
-PROJECT_ID = 'springmltraining-316807'
+PROJECT_ID = 'training-316807'
 
 class dataingestion:
   def parse_method(self, string_input):
